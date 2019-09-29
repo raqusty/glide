@@ -2,8 +2,12 @@ package com.bumptech.glide.samples.gallery;
 
 import android.Manifest.permission;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -18,6 +22,7 @@ import com.bumptech.glide.MemoryCategory;
 public class MainActivity extends FragmentActivity {
 
   private static final int REQUEST_READ_STORAGE = 0;
+  private  GlideRequests glideRequests;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +43,33 @@ public class MainActivity extends FragmentActivity {
         this, new String[] {permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_STORAGE);
   }
 
+  ImageView imageView;
   private void replaceFragment() {
-    Fragment fragment = new HorizontalGalleryFragment();
-    getSupportFragmentManager()
-        .beginTransaction()
-        .replace(R.id.fragment_container, fragment)
-        .commit();
+    imageView = findViewById(R.id.image_view);
+    glideRequests= GlideApp.with(this);
+    imageView.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+
+        GlideRequest<Drawable> requestBuilder =glideRequests.asDrawable().fitCenter();
+        String url = "http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg";
+        String url2 = "https://media1.giphy.com/media/LOu2MMZgOPItHK6QJd/giphy.gif?cid=e1bb72fffdbf40a7f71e87f837f333fbea9ed8145bc8e181&rid=giphy.gif";
+        String url3 = "http://pim.ycw.com/chat/pic/201909/29/eea6e2432c338c43ef4b583c17e0d0ef";
+        String url4 = "http://pim.ycw.com/chat/pic/201909/29/0643d50ddc179d1723ba5ce1fd8e021c";
+
+        requestBuilder.clone().load(url4).into(imageView);
+      }
+    });
+
+
+
+
+//    Fragment fragment = new HorizontalGalleryFragment();
+//    getSupportFragmentManager()
+//        .beginTransaction()
+//        .replace(R.id.fragment_container, fragment)
+//        .commit();
   }
 
   @Override

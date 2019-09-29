@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -138,7 +139,9 @@ public class MainActivity extends Activity implements Api.Monitor {
 
       // clearOnDetach let's us stop animating GifDrawables that RecyclerView hasn't yet recycled
       // but that are currently off screen.
-      requestBuilder.load(result).into(holder.gifView).clearOnDetach();
+      Log.i("linzehao", "result  "+result);
+      String url = "http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg";
+      requestBuilder.load(url).into(holder.gifView).clearOnDetach();
 
       preloadSizeProvider.setView(holder.gifView);
     }

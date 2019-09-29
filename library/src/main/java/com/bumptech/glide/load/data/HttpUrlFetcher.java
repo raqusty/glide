@@ -8,6 +8,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.HttpException;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.util.AESHelper;
 import com.bumptech.glide.util.ContentLengthInputStream;
 import com.bumptech.glide.util.LogTime;
 import com.bumptech.glide.util.Synthetic;
@@ -16,7 +17,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /** A DataFetcher that retrieves an {@link java.io.InputStream} for a Url. */
 public class HttpUrlFetcher implements DataFetcher<InputStream> {
@@ -144,6 +150,25 @@ public class HttpUrlFetcher implements DataFetcher<InputStream> {
       }
       stream = urlConnection.getInputStream();
     }
+    try {
+      stream = AESHelper.decryptStream("3226730268090427",stream);
+    } catch (BadPaddingException e) {
+      Log.i("linzehao","e1 "+e.getMessage());
+//      e.printStackTrace();
+    } catch (IllegalBlockSizeException e) {
+      Log.i("linzehao","e2 "+e.getMessage());
+//      e.printStackTrace();
+    } catch (NoSuchPaddingException e) {
+      Log.i("linzehao","e3 "+e.getMessage());
+//      e.printStackTrace();
+    } catch (NoSuchAlgorithmException e) {
+      Log.i("linzehao","e4 "+e.getMessage());
+//      e.printStackTrace();
+    } catch (InvalidKeyException e) {
+      Log.i("linzehao","e5 "+e.getMessage());
+//      e.printStackTrace();
+    }
+
     return stream;
   }
 

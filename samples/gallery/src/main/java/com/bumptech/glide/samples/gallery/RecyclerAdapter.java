@@ -73,7 +73,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ListViewHolde
     Key signature =
         new MediaStoreSignature(current.mimeType, current.dateModified, current.orientation);
 
-    requestBuilder.clone().signature(signature).load(current.uri).into(viewHolder.image);
+    String url = "http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg";
+    String url2 = "https://media1.giphy.com/media/LOu2MMZgOPItHK6QJd/giphy.gif?cid=e1bb72fffdbf40a7f71e87f837f333fbea9ed8145bc8e181&rid=giphy.gif";
+    requestBuilder.clone().load(url).into(viewHolder.image);
   }
 
   @Override
@@ -104,7 +106,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ListViewHolde
   public RequestBuilder<Drawable> getPreloadRequestBuilder(@NonNull MediaStoreData item) {
     MediaStoreSignature signature =
         new MediaStoreSignature(item.mimeType, item.dateModified, item.orientation);
-    return requestBuilder.clone().signature(signature).load(item.uri);
+    return requestBuilder.clone().load("http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg");
   }
 
   @Nullable
