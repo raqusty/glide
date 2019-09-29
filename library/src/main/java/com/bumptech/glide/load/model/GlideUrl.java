@@ -35,6 +35,8 @@ public class GlideUrl implements Key {
   @Nullable private URL safeUrl;
   @Nullable private volatile byte[] cacheKeyBytes;
 
+  private  String cipher;
+
   private int hashCode;
 
   public GlideUrl(URL url) {
@@ -49,6 +51,13 @@ public class GlideUrl implements Key {
     this.url = Preconditions.checkNotNull(url);
     stringUrl = null;
     this.headers = Preconditions.checkNotNull(headers);
+  }
+
+  public GlideUrl(String url, String cipher) {
+    this.url = null;
+    this.cipher = cipher;
+    stringUrl = Preconditions.checkNotEmpty(url);
+    this.headers = Headers.DEFAULT;
   }
 
   public GlideUrl(String url, Headers headers) {
@@ -111,6 +120,10 @@ public class GlideUrl implements Key {
     return stringUrl != null ? stringUrl : Preconditions.checkNotNull(url).toString();
   }
 
+  public String getCipher(){
+    return cipher;
+  }
+
   @Override
   public String toString() {
     return getCacheKey();
@@ -127,6 +140,7 @@ public class GlideUrl implements Key {
     }
     return cacheKeyBytes;
   }
+
 
   @Override
   public boolean equals(Object o) {

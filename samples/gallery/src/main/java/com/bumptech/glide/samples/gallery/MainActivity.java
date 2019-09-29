@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.MemoryCategory;
 
 /** Displays a {@link HorizontalGalleryFragment}. */
@@ -58,7 +59,7 @@ public class MainActivity extends FragmentActivity {
         String url3 = "http://pim.ycw.com/chat/pic/201909/29/eea6e2432c338c43ef4b583c17e0d0ef";
         String url4 = "http://pim.ycw.com/chat/pic/201909/29/0643d50ddc179d1723ba5ce1fd8e021c";
 
-        requestBuilder.clone().load(url4).into(imageView);
+        requestBuilder.clone().load(new GlideUrl(url4,"3226730268090427")).into(imageView);
       }
     });
 

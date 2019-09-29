@@ -150,25 +150,17 @@ public class HttpUrlFetcher implements DataFetcher<InputStream> {
       }
       stream = urlConnection.getInputStream();
     }
-    try {
-      stream = AESHelper.decryptStream("3226730268090427",stream);
-    } catch (BadPaddingException e) {
-      Log.i("linzehao","e1 "+e.getMessage());
-//      e.printStackTrace();
-    } catch (IllegalBlockSizeException e) {
-      Log.i("linzehao","e2 "+e.getMessage());
-//      e.printStackTrace();
-    } catch (NoSuchPaddingException e) {
-      Log.i("linzehao","e3 "+e.getMessage());
-//      e.printStackTrace();
-    } catch (NoSuchAlgorithmException e) {
-      Log.i("linzehao","e4 "+e.getMessage());
-//      e.printStackTrace();
-    } catch (InvalidKeyException e) {
-      Log.i("linzehao","e5 "+e.getMessage());
-//      e.printStackTrace();
+    String cipher = glideUrl.getCipher();
+    if (!TextUtils.isEmpty(cipher)){
+      try {
+        stream = AESHelper.decryptStream(glideUrl.getCipher(),stream);
+      } catch (BadPaddingException e) {
+      } catch (IllegalBlockSizeException e) {
+      } catch (NoSuchPaddingException e) {
+      } catch (NoSuchAlgorithmException e) {
+      } catch (InvalidKeyException e) {
+      }
     }
-
     return stream;
   }
 
