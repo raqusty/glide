@@ -5,6 +5,9 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -15,21 +18,24 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.MemoryCategory;
+import java.io.File;
 
 /** Displays a {@link HorizontalGalleryFragment}. */
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
 public class MainActivity extends FragmentActivity {
 
   private static final int REQUEST_READ_STORAGE = 0;
-  private  GlideRequests glideRequests;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
-    GlideApp.get(this).setMemoryCategory(MemoryCategory.HIGH);
+//    GlideApp.get(this).setMemoryCategory(MemoryCategory.HIGH);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
         && ContextCompat.checkSelfPermission(this, permission.READ_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
@@ -44,25 +50,30 @@ public class MainActivity extends FragmentActivity {
         this, new String[] {permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_STORAGE);
   }
 
-  ImageView imageView;
+
+  ImageView imageView1,imageView2;
   private void replaceFragment() {
-    imageView = findViewById(R.id.image_view);
-    glideRequests= GlideApp.with(this);
-    imageView.setOnClickListener(new OnClickListener() {
+    imageView1 = findViewById(R.id.image_view1);
+    imageView2 = findViewById(R.id.image_view2);
+
+    imageView1.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
 
-
-        GlideRequest<Drawable> requestBuilder =glideRequests.asDrawable().fitCenter();
-        String url = "http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg";
-        String url2 = "https://media1.giphy.com/media/LOu2MMZgOPItHK6QJd/giphy.gif?cid=e1bb72fffdbf40a7f71e87f837f333fbea9ed8145bc8e181&rid=giphy.gif";
-        String url3 = "http://pim.ycw.com/chat/pic/201909/29/eea6e2432c338c43ef4b583c17e0d0ef";
-        String url4 = "http://pim.ycw.com/chat/pic/201909/29/0643d50ddc179d1723ba5ce1fd8e021c";
-
-        requestBuilder.clone().load(new GlideUrl(url4,"3226730268090427")).into(imageView);
       }
     });
 
+    imageView2.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+        String url2 = "https://media1.giphy.com/media/LOu2MMZgOPItHK6QJd/giphy.gif?cid=e1bb72fffdbf40a7f71e87f837f333fbea9ed8145bc8e181&rid=giphy.gif";
+        String url3 = "http://pim.ycw.com/chat/pic/201909/29/eea6e2432c338c43ef4b583c17e0d0ef";
+        String url4 = "https://p-meet.oss-cn-shenzhen.aliyuncs.com/test/common/pic/202008/14/d7a84ebe6c4e4608c42eaeff74aaed30";
+//        GlideApp.with(MainActivity.this).load(new GlideUrl(url2)).into(imageView2);
+        GlideApp.with(MainActivity.this).load(new GlideUrl(url4,"1234560000000000")).into(imageView2);
+      }
+    });
 
 
 

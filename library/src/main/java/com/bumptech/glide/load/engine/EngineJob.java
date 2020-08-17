@@ -1,5 +1,6 @@
 package com.bumptech.glide.load.engine;
 
+import android.util.Log;
 import androidx.annotation.GuardedBy;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -126,8 +127,10 @@ class EngineJob<R> implements DecodeJob.Callback<R>, Poolable {
 
   public synchronized void start(DecodeJob<R> decodeJob) {
     this.decodeJob = decodeJob;
+    Boolean result = decodeJob.willDecodeFromCache();
+    Log.i("linzehao","result "+result);
     GlideExecutor executor =
-        decodeJob.willDecodeFromCache() ? diskCacheExecutor : getActiveSourceExecutor();
+        result ? diskCacheExecutor : getActiveSourceExecutor();
     executor.execute(decodeJob);
   }
 
